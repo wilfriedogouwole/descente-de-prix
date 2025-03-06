@@ -4,13 +4,11 @@ export interface Package {
   color: string;
   icon: string;
   features: Feature[];
-  selected?: boolean;
 }
 
 export interface Feature {
   icon: string;
   name: string;
-  description?: string;
 }
 
 export interface PricingOption {

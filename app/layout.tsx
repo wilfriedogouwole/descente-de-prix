@@ -1,8 +1,9 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/ui/navigation";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import React from "react";
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,9 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
+    <html lang="fr" suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Navigation />
           {children}
         </ThemeProvider>

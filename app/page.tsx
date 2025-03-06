@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from 'react';
-import { Package, PricingOption } from '@/lib/types';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Package, PricingOption, SelectedPackages } from '@/lib/types';
 import { Crown } from 'lucide-react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const packages: Package[] = [
   {
@@ -13,44 +13,61 @@ const packages: Package[] = [
     name: 'WEBUP',
     color: 'bg-yellow-100',
     icon: '💻',
-    features: ['Site web', 'Hébergement', 'Maintenance', 'SEO'],
+    features: [
+      { icon: '🌐', name: 'Site web' },
+      { icon: '💾', name: 'Hébergement' },
+      { icon: '🔧', name: 'Maintenance' },
+      { icon: '🔍', name: 'SEO' }
+    ]
   },
   {
     id: 'social',
     name: 'SOCIAL+',
     color: 'bg-blue-100',
     icon: '📱',
-    features: ['Réseaux sociaux', 'Community management', 'Publicité'],
+    features: [
+      { icon: '📱', name: 'Réseaux sociaux' },
+      { icon: '👥', name: 'Community management' },
+      { icon: '📣', name: 'Publicité' }
+    ]
   },
   {
     id: 'ged',
     name: 'GED',
     color: 'bg-purple-100',
     icon: '📄',
-    features: ['Gestion documentaire', 'Archivage', 'Workflow'],
+    features: [
+      { icon: '📁', name: 'Gestion documentaire' },
+      { icon: '📦', name: 'Archivage' },
+      { icon: '🔄', name: 'Workflow' }
+    ]
   },
   {
     id: 'shield',
     name: 'SHIELD',
     color: 'bg-gray-100',
     icon: '🛡️',
-    features: ['Sécurité', 'Protection', 'Surveillance'],
-  },
+    features: [
+      { icon: '🔒', name: 'Sécurité' },
+      { icon: '🛡️', name: 'Protection' },
+      { icon: '👀', name: 'Surveillance' }
+    ]
+  }
 ];
 
 const pricingOptions: PricingOption[] = [
   {
     duration: 12,
     monthlyPrice: 399,
-    yearlyPrice: 4788,
+    yearlyPrice: 4788
   },
   {
     duration: 48,
     monthlyPrice: 189,
     yearlyPrice: 2268,
     discount: 53,
-    savings: 2528,
-  },
+    savings: 2528
+  }
 ];
 
 export default function Home() {
@@ -78,7 +95,6 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-12 gap-8">
-          {/* Left side - Package selection */}
           <div className="md:col-span-4 space-y-4">
             {packages.map((pkg) => (
               <Card
@@ -89,8 +105,8 @@ export default function Home() {
                 onClick={() => togglePackage(pkg.id)}
               >
                 <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-2xl mr-2">{pkg.icon}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">{pkg.icon}</span>
                     <span className="font-bold">{pkg.name}</span>
                   </div>
                   <Button
@@ -101,11 +117,20 @@ export default function Home() {
                     {selectedPackages[pkg.id] ? "✓" : "+"}
                   </Button>
                 </div>
+                {selectedPackages[pkg.id] && (
+                  <div className="mt-4 grid grid-cols-2 gap-2">
+                    {pkg.features.map((feature, index) => (
+                      <div key={index} className="flex items-center gap-2 text-sm">
+                        <span>{feature.icon}</span>
+                        <span>{feature.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </Card>
             ))}
           </div>
 
-          {/* Right side - Pricing */}
           <div className="md:col-span-8">
             <div className="grid md:grid-cols-2 gap-8">
               {pricingOptions.map((option) => (
